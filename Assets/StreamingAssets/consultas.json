@@ -1,0 +1,10 @@
+[
+    {
+        "consulta": "Tengo una tabla de 'productos' con nombres y precios. ¿Puedes mostrarme todos los productos que cuesten menos de $20?",
+        "respuestaCorrecta": "SELECT * FROM productos WHERE precio < 20;"
+    },
+    {
+        "consulta": "Tengo una tabla de 'clientes' con nombres y edades. ¿Puedes mostrarme todos los clientes mayores de 30 años?",
+        "respuestaCorrecta": "SELECT * FROM clientes WHERE edad > 30;"
+    }
+]
