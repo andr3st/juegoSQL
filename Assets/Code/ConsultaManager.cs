@@ -8,8 +8,11 @@ public class ConsoleManager : MonoBehaviour
 {
     public TMP_InputField textConsola;
     public TextMeshProUGUI textConsulta;
+    public TextMeshProUGUI textConsola2;
     public barraResta barraRestaScript; // Referencia al script barraResta
     public barraSuma barraSumaScript;   // Referencia al script barraSuma
+    public SpriteRenderer consola1;
+    public Image consola2;
 
     private int[] Numero;
     private  int NivelActual=1;
@@ -147,6 +150,9 @@ public class ConsoleManager : MonoBehaviour
 
         void MostrarConsulta(int NivelActual,int num){
             if(NivelActual==1){
+                Color color1 = new Color(255f,255f,255f,1f);
+                consola1.color = color1;
+                consola2.color = color1;
                 textConsulta.text= Nivel1[num].consulta;
                 textConsola.text= Nivel1[num].IngresarTexto;
                 Debug.Log("Nivel 1 consulta: " + Nivel1[num].consulta);
@@ -154,6 +160,9 @@ public class ConsoleManager : MonoBehaviour
                 Debug.Log("Nivel 1 RESPUESTA: " + Nivel1[num].RespuestaCorrecta);
             }
             else if(NivelActual==2){
+                Color color2 = new Color(0f,27f,178f,1f);
+                consola1.color = color2;
+                consola2.color = color2;
                 textConsulta.text= Nivel2[num].consulta;
                 textConsola.text= Nivel2[num].IngresarTexto;
                 Debug.Log("Nivel 2 consulta: " + Nivel2[num].consulta);
@@ -161,6 +170,10 @@ public class ConsoleManager : MonoBehaviour
                 Debug.Log("Nivel 2 RESPUESTA: " + Nivel2[num].RespuestaCorrecta);
             }
             else{
+                Color color2 = new Color(0f,0f,0f,1f);
+                consola1.color = color2;
+                consola2.color = color2;
+                textConsola2.color = Color.green;
                 textConsulta.text= Nivel3[num].consulta;
                 textConsola.text= Nivel3[num].IngresarTexto;
             }

@@ -12,6 +12,9 @@ public class barraSuma : MonoBehaviour
     public Image imageChanger; // Referencia al componente Image en el GameObject
     public List<Sprite> images; // Lista de sprites para las diferentes imágenes
 
+    public Image emojiChanger; // Referencia al componente Image en el GameObject
+    public List<Sprite> emojis; // Lista de sprites para las diferentes imágenes
+
     private float intervalo;
 
     void Awake()
@@ -28,6 +31,7 @@ public class barraSuma : MonoBehaviour
         {
             Barra.value += sum; // Aumentar el valor de la barra
             ActualizarImagen();
+            ActualizarEmoji();
         }
     }
 
@@ -47,9 +51,36 @@ public class barraSuma : MonoBehaviour
         }
     }
 
+        void ActualizarEmoji()
+    {
+        // Determina el índice de la imagen en función del valor del slider
+        int index = Mathf.FloorToInt(Barra.value / intervalo);
+
+        // Ajusta el índice para asegurarse de que la última imagen se muestre en el valor mínimo
+        if (Barra.value <= max * 0.5f)
+        {
+            index = 0; // Primera imagen
+        }
+        else if (Barra.value <= max * 0.75f)
+        {
+            index = 1; // Segunda imagen
+        }
+        else
+        {
+            index = 2; // Tercera imagen
+        }
+
+        // Asegúrate de que el índice esté dentro de los límites de la lista
+        if (index >= 0 && index < emojis.Count)
+        {
+            emojiChanger.sprite = emojis[index];
+        }
+    }
+
     public void AumentarBarra(float cantidad)
     {
         Barra.value = Mathf.Min(Barra.value + cantidad, max);
         ActualizarImagen();
+        ActualizarEmoji();
     }
 }
