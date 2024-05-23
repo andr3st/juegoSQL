@@ -51,7 +51,7 @@ public class barraSuma : MonoBehaviour
         }
     }
 
-        void ActualizarEmoji()
+    void ActualizarEmoji()
     {
         // Determina el índice de la imagen en función del valor del slider
         int index = Mathf.FloorToInt(Barra.value / intervalo);
@@ -80,6 +80,13 @@ public class barraSuma : MonoBehaviour
     public void AumentarBarra(float cantidad)
     {
         Barra.value = Mathf.Min(Barra.value + cantidad, max);
+        ActualizarImagen();
+        ActualizarEmoji();
+    }
+
+    public void ReducirBarra(float cantidad)
+    {
+        Barra.value = Mathf.Max(Barra.value - cantidad, 0);
         ActualizarImagen();
         ActualizarEmoji();
     }
