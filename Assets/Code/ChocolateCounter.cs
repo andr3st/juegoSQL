@@ -25,7 +25,7 @@ public class ChocolateCounter : MonoBehaviour
         {
             chocolateCount--;
             UpdateChocolateText();
-            barraSumaScript.ReducirBarra(15); // Resta 15 puntos de la barra
+            barraSumaScript.ReducirBarra(20); // Resta 20 puntos de la barra
         }
     }
 
