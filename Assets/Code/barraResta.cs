@@ -7,12 +7,15 @@ public class barraResta : MonoBehaviour
 {
     public Slider Barra;
     public float max = 200;
-    public float res = 1;
+    public float res = 2;
 
     public Image imageChanger; // Referencia al componente Image en el GameObject
     public List<Sprite> images; // Lista de sprites para las diferentes imágenes
 
+    public AudioSource alarmSound; // Referencia al componente AudioSource para la alarma
+
     private float intervalo;
+    private bool alarmaActiva = false; // Variable para controlar el estado de la alarma
 
     void Awake()
     {
@@ -28,6 +31,7 @@ public class barraResta : MonoBehaviour
         {
             Barra.value -= res; // Reducir el valor de la barra
             ActualizarImagen();
+            VerificarAlarma();
         }
     }
 
@@ -57,15 +61,37 @@ public class barraResta : MonoBehaviour
         }
     }
 
+    void VerificarAlarma()
+    {
+        if (Barra.value <= max / 3f)
+        {
+            if (!alarmaActiva)
+            {
+                alarmSound.Play(); // Reproduce el sonido de alarma
+                alarmaActiva = true; // Activa la alarma
+            }
+        }
+        else
+        {
+            if (alarmaActiva)
+            {
+                alarmSound.Stop(); // Detiene el sonido de alarma
+                alarmaActiva = false; // Desactiva la alarma
+            }
+        }
+    }
+
     public void AumentarBarra(float cantidad)
     {
         Barra.value = Mathf.Min(Barra.value + cantidad, max);
         ActualizarImagen();
+        VerificarAlarma();
     }
 
     public void ReducirBarra(float cantidad)
     {
         Barra.value = Mathf.Max(Barra.value - cantidad, 0);
         ActualizarImagen();
+        VerificarAlarma();
     }
 }

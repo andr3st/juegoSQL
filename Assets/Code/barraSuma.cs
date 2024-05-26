@@ -7,7 +7,7 @@ public class barraSuma : MonoBehaviour
 {
     Slider Barra;
     public float max = 200;
-    public float sum = 1;
+    public float sum = 2;
 
     public Image imageChanger; // Referencia al componente Image en el GameObject
     public List<Sprite> images; // Lista de sprites para las diferentes imágenes
@@ -15,7 +15,10 @@ public class barraSuma : MonoBehaviour
     public Image emojiChanger; // Referencia al componente Image en el GameObject
     public List<Sprite> emojis; // Lista de sprites para las diferentes imágenes
 
+    public AudioSource alertSound; // Referencia al componente AudioSource para la alerta
+
     private float intervalo;
+    private bool alertaActiva = false; // Variable para controlar el estado de la alerta
 
     void Awake()
     {
@@ -32,6 +35,7 @@ public class barraSuma : MonoBehaviour
             Barra.value += sum; // Aumentar el valor de la barra
             ActualizarImagen();
             ActualizarEmoji();
+            VerificarAlerta();
         }
     }
 
@@ -77,11 +81,32 @@ public class barraSuma : MonoBehaviour
         }
     }
 
+    void VerificarAlerta()
+    {
+        if (Barra.value >= max * 2 / 3)
+        {
+            if (!alertaActiva)
+            {
+                alertSound.Play(); // Reproduce el sonido de alerta
+                alertaActiva = true; // Activa la alerta
+            }
+        }
+        else
+        {
+            if (alertaActiva)
+            {
+                alertSound.Stop(); // Detiene el sonido de alerta
+                alertaActiva = false; // Desactiva la alerta
+            }
+        }
+    }
+
     public void AumentarBarra(float cantidad)
     {
         Barra.value = Mathf.Min(Barra.value + cantidad, max);
         ActualizarImagen();
         ActualizarEmoji();
+        VerificarAlerta();
     }
 
     public void ReducirBarra(float cantidad)
@@ -89,5 +114,6 @@ public class barraSuma : MonoBehaviour
         Barra.value = Mathf.Max(Barra.value - cantidad, 0);
         ActualizarImagen();
         ActualizarEmoji();
+        VerificarAlerta();
     }
 }

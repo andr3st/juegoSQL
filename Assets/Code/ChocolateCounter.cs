@@ -26,11 +26,17 @@ public class ChocolateCounter : MonoBehaviour
             chocolateCount--;
             UpdateChocolateText();
             barraSumaScript.ReducirBarra(20); // Resta 20 puntos de la barra
+            SoundManager.Instance.PlaySoundClickChocolate(); // Reproduce el sonido al usar un chocolate
         }
     }
 
     private void UpdateChocolateText()
     {
         chocolateText.text = "x" + chocolateCount.ToString();
+    }
+
+    public void OnClickChocolate()
+    {
+        SoundManager.Instance.PlaySoundClickChocolate(); // Reproduce el sonido de clic en el chocolate
     }
 }

@@ -11,10 +11,12 @@ public class ConsoleManager : MonoBehaviour
     public barraResta barraRestaScript; // Referencia al script barraResta
     public barraSuma barraSumaScript;   // Referencia al script barraSuma
     public ChocolateCounter chocolateCounter; // Referencia al script ChocolateCounter
+    public LevelChangeImage levelChangeImage; // Referencia al script LevelChangeImage
 
     private int consultaActual = 0;
     private int contadorCorrectas = 0; // Contador de respuestas correctas consecutivas
     private bool mostrarMensajeChocolate = false; // Bandera para el mensaje de chocolate
+    private int nivelAnterior = 0; // Variable para almacenar el nivel anterior
 
     private struct Consulta
     {
@@ -116,6 +118,13 @@ public class ConsoleManager : MonoBehaviour
                 break;
         }
         textConsola.GetComponent<Image>().color = color;
+
+        // Reproduce el sonido de subir de nivel solo si el nivel ha cambiado
+        if (nivel != nivelAnterior)
+        {
+            SoundManager.Instance.PlaySoundLevelUp();
+            nivelAnterior = nivel; // Actualiza el nivel anterior
+        }
     }
 
     List<Consulta> SeleccionarPreguntas()
@@ -161,6 +170,7 @@ public class ConsoleManager : MonoBehaviour
                 barraRestaScript.AumentarBarra(10); // Aumenta la barra de resta en 10 si es correcto
                 contadorCorrectas++; // Incrementa el contador de respuestas correctas
                 Debug.Log("Racha: " + contadorCorrectas);
+                SoundManager.Instance.PlaySoundCorrectAnswer(); // Reproduce el sonido de respuesta correcta
 
                 if (contadorCorrectas % 3 == 0)
                 {
@@ -168,16 +178,18 @@ public class ConsoleManager : MonoBehaviour
                     textConsola.text = ""; // Vacía el campo de entrada
                     chocolateCounter.AddChocolate(); // Añade un chocolate al contador
                     mostrarMensajeChocolate = true; // Activa la bandera para el mensaje del chocolate
+                    SoundManager.Instance.PlaySoundChocolate(); // Reproduce el sonido de chocolate
                     return; // No pasar a la siguiente consulta inmediatamente
                 }
             }
             else
             {
                 Debug.Log("El texto ingresado es incorrecto.");
-                barraRestaScript.ReducirBarra(10); // Reduce la barra de resta en 10 si es incorrecto
-                barraSumaScript.AumentarBarra(10); // Aumenta la barra de suma en 10 si es incorrecto
+                barraRestaScript.ReducirBarra(15); // Reduce la barra de resta en 10 si es incorrecto
+                barraSumaScript.AumentarBarra(15); // Aumenta la barra de suma en 10 si es incorrecto
                 contadorCorrectas = 0; // Reinicia el contador si la respuesta es incorrecta
                 Debug.Log("Racha: " + contadorCorrectas);
+                SoundManager.Instance.PlaySoundIncorrectAnswer(); // Reproduce el sonido de respuesta incorrecta
             }
 
             consultaActual++;
