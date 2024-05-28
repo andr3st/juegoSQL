@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement; // Importa SceneManager
 using UnityEngine.UI;
 
 public class barraSuma : MonoBehaviour
 {
     Slider Barra;
-    public float max = 200;
+    public float max = 100;
     public float sum = 2;
 
     public Image imageChanger; // Referencia al componente Image en el GameObject
@@ -36,6 +37,7 @@ public class barraSuma : MonoBehaviour
             ActualizarImagen();
             ActualizarEmoji();
             VerificarAlerta();
+            VerificarCambioEscena(); // Verificar si es necesario cambiar de escena
         }
     }
 
@@ -101,12 +103,21 @@ public class barraSuma : MonoBehaviour
         }
     }
 
+    void VerificarCambioEscena()
+    {
+        if (Barra.value == max)
+        {
+            SceneManager.LoadScene(3); // Cargar escena con índice 3
+        }
+    }
+
     public void AumentarBarra(float cantidad)
     {
         Barra.value = Mathf.Min(Barra.value + cantidad, max);
         ActualizarImagen();
         ActualizarEmoji();
         VerificarAlerta();
+        VerificarCambioEscena(); // Verificar si es necesario cambiar de escena
     }
 
     public void ReducirBarra(float cantidad)
@@ -115,5 +126,6 @@ public class barraSuma : MonoBehaviour
         ActualizarImagen();
         ActualizarEmoji();
         VerificarAlerta();
+        VerificarCambioEscena(); // Verificar si es necesario cambiar de escena
     }
 }

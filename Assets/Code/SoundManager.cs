@@ -9,6 +9,7 @@ public class SoundManager : MonoBehaviour
     public AudioSource soundChocolate;
     public AudioSource soundLevelUp;
     public AudioSource soundClickChocolate;
+    public AudioSource soundFriendWhistle;
 
     private void Awake()
     {
@@ -46,5 +47,11 @@ public class SoundManager : MonoBehaviour
     public void PlaySoundClickChocolate()
     {
         soundClickChocolate.Play();
+    }
+
+
+    public void PlaySoundFriend()
+    {
+        soundFriendWhistle.Play();
     }
 }
