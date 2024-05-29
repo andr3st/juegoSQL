@@ -752,7 +752,7 @@ MonoBehaviour:
   m_FillRect: {fileID: 899824319}
   m_HandleRect: {fileID: 1138949020}
   m_Direction: 0
-  m_MinValue: 1
+  m_MinValue: 0
   m_MaxValue: 200
   m_WholeNumbers: 0
   m_Value: 2
@@ -1494,7 +1494,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 3a2e35d7a4439a448a5a55e623ae5a1d, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.31
   m_Pitch: 1
   Loop: 0
   Mute: 0

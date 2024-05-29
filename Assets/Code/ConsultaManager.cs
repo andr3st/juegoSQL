@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement; // Importa SceneManager
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
@@ -15,7 +16,6 @@ public class ConsoleManager : MonoBehaviour
     public LevelChangeImage levelChangeImage; // Referencia al script LevelChangeImage
     public GameObject specialImage; // Referencia al GameObject que contiene la imagen especial
     public AudioSource soundClick; // Referencia al sonido de clic
-
 
     private int consultaActual = 0;
     private int contadorCorrectas = 0; // Contador de respuestas correctas consecutivas
@@ -99,8 +99,7 @@ public class ConsoleManager : MonoBehaviour
         }
         else
         {
-            textConsulta.text = "Has completado todas las consultas.";
-            textConsola.gameObject.SetActive(false);
+            SceneManager.LoadScene(2); // Cambia a la escena con índice 2 cuando no haya más consultas
         }
     }
 
@@ -138,8 +137,8 @@ public class ConsoleManager : MonoBehaviour
         System.Random rnd = new System.Random();
 
         var nivel1 = consultas.Where(c => c.nivel == 1).OrderBy(x => rnd.Next()).Take(4).ToList();
-        var nivel2 = consultas.Where(c => c.nivel == 2).OrderBy(x => rnd.Next()).Take(3).ToList();
-        var nivel3 = consultas.Where(c => c.nivel == 3).OrderBy(x => rnd.Next()).Take(3).ToList();
+        var nivel2 = consultas.Where(c => c.nivel == 2).OrderBy(x => rnd.Next()).Take (3).ToList();
+        var nivel3 = consultas.Where(c => c.nivel == 3).OrderBy(x => rnd.Next()).Take (3).ToList();
 
         seleccionadas.AddRange(nivel1);
         seleccionadas.AddRange(nivel2);
@@ -149,82 +148,79 @@ public class ConsoleManager : MonoBehaviour
     }
 
     public void VerificarRespuesta()
-{
-    soundClick.Play(); // Reproduce el sonido de clic
-
-    if (mostrarMensajeChocolate)
     {
-        mostrarMensajeChocolate = false;
-        consultaActual++;
-        MostrarConsulta();
-        return;
-    }
+        soundClick.Play(); // Reproduce el sonido de clic
 
-    string textoIngresado = textConsola.text.Trim(); // Obtener y limpiar el texto ingresado
-    Debug.Log($"Texto ingresado: '{textoIngresado}'");
-
-    // Log de cada carácter ingresado y su código ASCII
-    foreach (char c in textoIngresado)
-    {
-        Debug.Log($"Carácter: '{c}' ASCII: {(int)c}");
-    }
-
-    if (consultaActual < preguntasDelJuego.Count)
-    {
-        if (textoIngresado == preguntasDelJuego[consultaActual].respuestaCorrecta)
+        if (mostrarMensajeChocolate)
         {
-            Debug.Log("El texto ingresado es correcto.");
-            barraRestaScript.AumentarBarra(10); // Aumenta la barra de resta en 10 si es correcto
-            contadorCorrectas++; // Incrementa el contador de respuestas correctas
-            contadorIncorrectas = 0; // Reinicia el contador de respuestas incorrectas
-            Debug.Log("Racha: " + contadorCorrectas);
-            SoundManager.Instance.PlaySoundCorrectAnswer(); // Reproduce el sonido de respuesta correcta
-
-            if (contadorCorrectas % 3 == 0)
-            {
-                textConsulta.text = "Felicidades ganaste un chocolate";
-                textConsola.text = ""; // Vacía el campo de entrada
-                chocolateCounter.AddChocolate(); // Añade un chocolate al contador
-                mostrarMensajeChocolate = true; // Activa la bandera para el mensaje del chocolate
-                SoundManager.Instance.PlaySoundChocolate(); // Reproduce el sonido de chocolate
-                return; // No pasar a la siguiente consulta inmediatamente
-            }
-        }
-        else
-        {
-            Debug.Log("El texto ingresado es incorrecto.");
-            barraRestaScript.ReducirBarra(10); // Reduce la barra de resta en 10 si es incorrecto
-            barraSumaScript.AumentarBarra(20); // Aumenta la barra de suma en 10 si es incorrecto
-            contadorCorrectas = 0; // Reinicia el contador si la respuesta es incorrecta
-            contadorIncorrectas++; // Incrementa el contador de respuestas incorrectas
-            Debug.Log("Racha negativa: " + contadorIncorrectas);
-            SoundManager.Instance.PlaySoundIncorrectAnswer(); // Reproduce el sonido de respuesta incorrecta
-
-            if (contadorIncorrectas == 3)
-            {
-                textConsulta.text = "Tu compañero te mandó un chocolate dice que le eches ganas y no te rindas";
-                textConsola.text = ""; // Vacía el campo de entrada
-                chocolateCounter.AddChocolate(); // Añade un chocolate al contador
-                mostrarMensajeChocolate = true; // Activa la bandera para el mensaje del chocolate
-                specialImage.SetActive(true); // Muestra la imagen especial
-                SoundManager.Instance.PlaySoundFriend(); // Reproduce el sonido de amigo
-                StartCoroutine(EsconderImagen());
-                contadorIncorrectas = 0; // Reinicia el contador de racha negativa después de mostrar el mensaje
-                return; // No pasar a la siguiente consulta inmediatamente
-            }
+            mostrarMensajeChocolate = false;
+            consultaActual++;
+            MostrarConsulta();
+            return;
         }
 
-        consultaActual++;
-        MostrarConsulta();
+        string textoIngresado = textConsola.text.Trim(); // Obtener y limpiar el texto ingresado
+        Debug.Log($"Texto ingresado: '{textoIngresado}'");
+
+        // Log de cada carácter ingresado y su código ASCII
+        foreach (char c in textoIngresado)
+        {
+            Debug.Log($"Carácter: '{c}' ASCII: {(int)c}");
+        }
+
+        if (consultaActual < preguntasDelJuego.Count)
+        {
+            if (textoIngresado == preguntasDelJuego[consultaActual].respuestaCorrecta)
+            {
+                Debug.Log("El texto ingresado es correcto.");
+                barraRestaScript.AumentarBarra(10); // Aumenta la barra de resta en 10 si es correcto
+                contadorCorrectas++; // Incrementa el contador de respuestas correctas
+                contadorIncorrectas = 0; // Reinicia el contador de respuestas incorrectas
+                Debug.Log("Racha: " + contadorCorrectas);
+                SoundManager.Instance.PlaySoundCorrectAnswer(); // Reproduce el sonido de respuesta correcta
+
+                if (contadorCorrectas % 3 == 0)
+                {
+                    textConsulta.text = "Felicidades ganaste un chocolate";
+                    textConsola.text = ""; // Vacía el campo de entrada
+                    chocolateCounter.AddChocolate(); // Añade un chocolate al contador
+                    mostrarMensajeChocolate = true; // Activa la bandera para el mensaje del chocolate
+                    SoundManager.Instance.PlaySoundChocolate(); // Reproduce el sonido de chocolate
+                    return; // No pasar a la siguiente consulta inmediatamente
+                }
+            }
+            else
+            {
+                Debug.Log("El texto ingresado es incorrecto.");
+                barraRestaScript.ReducirBarra(10); // Reduce la barra de resta en 10 si es incorrecto
+                barraSumaScript.AumentarBarra(20); // Aumenta la barra de suma en 10 si es incorrecto
+                contadorCorrectas = 0; // Reinicia el contador si la respuesta es incorrecta
+                contadorIncorrectas++; // Incrementa el contador de respuestas incorrectas
+                Debug.Log("Racha negativa: " + contadorIncorrectas);
+                SoundManager.Instance.PlaySoundIncorrectAnswer(); // Reproduce el sonido de respuesta incorrecta
+
+                if (contadorIncorrectas == 3)
+                {
+                    textConsulta.text = "Tu compañero te mandó un chocolate dice que le eches ganas y no te rindas";
+                    textConsola.text = ""; // Vacía el campo de entrada
+                    chocolateCounter.AddChocolate(); // Añade un chocolate al contador
+                    mostrarMensajeChocolate = true; // Activa la bandera para el mensaje del chocolate
+                    specialImage.SetActive(true); // Muestra la imagen especial
+                    SoundManager.Instance.PlaySoundFriend(); // Reproduce el sonido de amigo
+                    StartCoroutine(EsconderImagen());
+                    contadorIncorrectas = 0; // Reinicia el contador de racha negativa después de mostrar el mensaje
+                    return; // No pasar a la siguiente consulta inmediatamente
+                }
+            }
+
+            consultaActual++;
+            MostrarConsulta();
+        }
     }
-}
-
-
-
 
     private IEnumerator EsconderImagen()
     {
-        yield return new WaitForSeconds(5); // Espera 3 segundos
+        yield return new WaitForSeconds(5); // Espera 5 segundos
         specialImage.SetActive(false); // Esconde la imagen especial
     }
 }
