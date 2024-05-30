@@ -40,40 +40,43 @@ public class ConsoleManager : MonoBehaviour
     private List<Consulta> preguntasDelJuego;
 
     private Consulta[] consultas = new Consulta[]
-    {
-        new Consulta(1, "Para la creación de una base de datos utilizamos el comando:", "CREATE DATABASE"),
-        new Consulta(1, "Para la creación de tablas utilizamos el comando:", "CREATE TABLE"),
-        new Consulta(1, "Para la inserción de datos a una tabla utilizamos el comando:", "INSERT INTO"),
-        new Consulta(1, "Para visualizar todos los datos de una tabla utilizamos el comando:", "SELECT * FROM"),
-        new Consulta(1, "Palabra que se utiliza para visualizar datos que cumplan una condición:", "WHERE"),
-        new Consulta(1, "Palabra que se usa para unir 2 tablas:", "JOIN"),
-        new Consulta(1, "Comando que se utiliza para agrupar filas en una tabla en función del valor de una columna determinada:", "GROUP BY"),
-        new Consulta(1, "Función para devolver el nombre del mes:", "MONTHNAME()"),
-        new Consulta(1, "Palabra y función que se utiliza para realizar el conteo de los datos:", "COUNT(*)"),
-        new Consulta(1, "Palabra para asignar un nombre a una columna de la tabla de visualización:", "AS"),
+{
+    // Nivel 1
+    new Consulta(1, "Para la creación de una base de datos utilizamos el comando:", "CREATE DATABASE"), //si
+    new Consulta(1, "Para la creación de tablas utilizamos el comando:", "CREATE TABLE"), //si
+    new Consulta(1, "Para la inserción de datos a una tabla utilizamos el comando:", "INSERT INTO"), //si
+    new Consulta(1, "Para visualizar todos los datos de una tabla utilizamos el comando:", "SELECT * FROM"), //si
+    new Consulta(1, "Palabra que se utiliza para visualizar datos que cumplan una condición:", "WHERE"), //si
+    new Consulta(1, "Palabra que se usa para unir 2 tablas:", "JOIN"), //si
+    new Consulta(1, "Comando que se utiliza para agrupar filas en una tabla en función del valor de una columna determinada:", "GROUP BY"), //si
+    new Consulta(1, "Función para devolver el nombre del mes:", "MONTHNAME()"), //si
+    new Consulta(1, "Palabra y función que se utiliza para realizar el conteo de los datos:", "COUNT(*)"), //si
+    new Consulta(1, "Palabra para asignar un nombre a una columna de la tabla de visualización:", "AS"), //si
 
-        new Consulta(2, "Para modificar los datos existentes de una tabla se utiliza la palabra:", "UPDATE"),
-        new Consulta(2, "Modificar el nombre de usuario en la columna c_nombre de la tabla t_usuarios donde su correo es ale@gmail.com (usa UPDATE):", "UPDATE t_usuario SET c_nombre = 'Alix' WHERE c_correo = 'ale@gmail.com';"),
-        new Consulta(2, "Selecciona los primeros 3 usuarios de la tabla t_usuarios (usa SELECT TOP):", "SELECT TOP 3 * FROM t_usuarios;"),
-        new Consulta(2, "Recupera la información de la tabla t_post y regresa la cantidad de publicaciones con la fecha del 23 de enero de 2023, la columna se llama dFecha (usa COUNT):", "SELECT count(dFecha) FROM t_post WHERE dFecha='2023-01-23';"),
-        new Consulta(2, "Ingresa las palabras faltantes del siguiente Query: SELECT count(*) AS _____ FROM t_usuarios:", "SELECT count(*) AS Total_usuarios FROM t_usuarios;"),
-        new Consulta(2, "Ingresa las palabras faltantes del siguiente query: SELECT cNickname FROM t_usuarios WHERE cEmail LIKE %gmail%;", "SELECT cNickname FROM t_usuarios WHERE cEmail LIKE %gmail%;"),
-        new Consulta(2, "Ingresa las palabras faltantes del siguiente Query: SELECT c_usuario FROM t_usuarios WHERE EXISTS (SELECT c_post FROM t_posts WHERE t_usuarios.c_usuarioID=t_posts.c_usuarioID AND c_etiqueta='imagen');", "SELECT c_usuario FROM t_usuarios WHERE EXISTS (SELECT c_post FROM t_posts WHERE t_usuarios.c_usuarioID=t_posts.c_usuarioID AND c_etiqueta='imagen');"),
-        new Consulta(2, "Ingresa las palabras faltantes del siguiente query: SELECT nUsuarioID, nCategoriasID, COUNT(*) AS Total_posts FROM t_posts GROUP BY nCategoriasID, nUsuarioID HAVING Total_posts>6 ORDER BY Total_posts;", "SELECT nUsuarioID, nCategoriasID, COUNT(*) AS Total_posts FROM t_posts GROUP BY nCategoriasID, nUsuarioID HAVING Total_posts>6 ORDER BY Total_posts;"),
-        new Consulta(2, "Ingresa las palabras faltantes del siguiente query: CREATE TABLE t_Cuentas ( [CuentaID] INT NOT NULL, [Saldo] DECIMAL (10,2) NOT NULL);", "CREATE TABLE t_Cuentas ( [CuentaID] INT NOT NULL, [Saldo] DECIMAL (10,2) NOT NULL);"),
-        new Consulta(2, "Escribe la sentencia para visualizar todos los datos de la tabla t_categorias:", "SELECT * FROM t_categorias;"),
+    // Nivel 2
+    new Consulta(2, "Para modificar los datos existentes de una tabla se utiliza la palabra:", "UPDATE"), //si
+    new Consulta(2, "Modificar el nombre de usuario (Alix) en la columna c_nombre de la tabla t_usuarios donde su correo es ale@gmail.com (usa UPDATE):", "UPDATE t_usuarios SET c_nombre = 'Alix' WHERE c_correo = 'ale@gmail.com';"), // si
+    new Consulta(2, "Selecciona los primeros 3 usuarios de la tabla t_usuarios (usa LIMIT):", "SELECT * FROM t_usuarios LIMIT 3;"), // si
+    new Consulta(2, "Recupera la información de la tabla t_post y regresa la cantidad de publicaciones con la fecha del 23 de enero de 2023, la columna se llama dFecha (usa COUNT):", "SELECT COUNT(*) FROM t_post WHERE dFecha='2023-01-23';"), // si
+    new Consulta(2, "Actualizar el saldo a 500.00 en la tabla t_Cuentas donde el CuentaID es 10:", "UPDATE t_Cuentas SET Saldo = 500.00 WHERE CuentaID = 10;"), // si
+    new Consulta(2, "Selecciona los usuarios (c_nombre) cuyo nombre comienza con 'A' de la tabla (t_usuarios) (usa LIKE):", "SELECT * FROM t_usuarios WHERE c_nombre LIKE 'A%';"), // si
+    new Consulta(2, "Recupera el correo y el nombre (c_correo), (c_nombre) de todos los usuarios (t_usuarios) ordenados por nombre de forma ascendente:", "SELECT c_correo, c_nombre FROM t_usuarios ORDER BY c_nombre ASC;"), //si
+    new Consulta(2, "Selecciona todos los registros de la tabla t_ventas donde el monto de la venta (cmonto_venta) sea mayor a 1000 (usa WHERE):", "SELECT * FROM t_ventas WHERE cmonto_venta > 1000;"),//si
+    new Consulta(2, "Ingresa las palabras faltantes del siguiente query: CREATE TABLE t_Cuentas ( [CuentaID] INT NOT NULL, [Saldo] DECIMAL (10,2) NOT NULL);", "CREATE TABLE t_Cuentas ( [CuentaID] INT NOT NULL, [Saldo] DECIMAL (10,2) NOT NULL);"), // si
+    new Consulta(2, "Escribe la sentencia para visualizar todos los datos de la tabla t_categorias:", "SELECT * FROM t_categorias;"), //si 
 
-        new Consulta(3, "Escribe la sentencia para borrar los datos de la tabla t_post que en su c_postID sean mayores a 10 (usa DELETE):", "DELETE FROM t_post WHERE c_postID>10;"),
-        new Consulta(3, "Sentencia para contar el número de post que ha hecho un usuario, teniendo en cuenta que la columna de post es c_post, y el nombre de usuario es c_usuario de la tabla t_posts (usa COUNT y GROUP BY):", "SELECT COUNT(c_post), c_usuario FROM t_post GROUP BY c_usuario;"),
-        new Consulta(3, "Mostrar id de Post que sean 11 o 18 de la tabla t_post, donde la columna del id post es c_id_post (usa WHERE):", "SELECT c_id_post FROM t_post WHERE c_id_post=11 or c_id_post=18;"),
-        new Consulta(3, "Unir las tablas t_post y t_usuarios por medio de la columna c_usuarioID (usa JOIN):", "SELECT * FROM t_post JOIN t_usuarios ON t_post.c_usuarioID= t_usuarios.c_usuarioID;"),
-        new Consulta(3, "Apellido Paterno más común de la tabla t_usuarios: SELECT TOP 1 c_apaterno AS Total, COUNT(*) FROM t_usuarios GROUP BY c_apaterno ORDER BY Total DESC;", "SELECT TOP 1 c_apaterno AS Total, COUNT(*) FROM t_usuarios GROUP BY c_apaterno ORDER BY Total DESC;"),
-        new Consulta(3, "Palabra que se utiliza para ejecutar un procedimiento almacenado:", "EXEC"),
-        new Consulta(3, "Crear un procedimiento almacenado que muestre toda la información de la tabla t_usuarios (usa CREATE PROCEDURE):", "CREATE PROCEDURE MostrarInfo AS SELECT * FROM t_usuarios GO;"),
-        new Consulta(3, "Crear un procedimiento almacenado que inserte información de un usuario a la tabla t_usuarios (usa CREATE PROCEDURE y INSERT INTO):", "CREATE PROCEDURE InsertarUsuario @nombre nvarchar(20), @apaterno nvarchar(20), @usuario nvarchar(20) AS INSERT INTO t_usuarios (c_nombre, c_apaterno, c_usuario) VALUES (@nombre, @apaterno, @usuario) GO;"),
-        new Consulta(3, "Ejecución del procedimiento almacenado InsertarUsuario con valores de nombre='ANA', apaterno='ORTIZ', usuario='AORTIZ':", "EXEC InsertarUsuario ('ANA','ORTIZ','AORTIZ');"),
-        new Consulta(3, "Crear una variable promedio y asignarle el valor 0 (usa SET):", "SET @promedio = 0")
-    };
+    // Nivel 3
+    new Consulta(3, "Escribe la sentencia para borrar los datos de la tabla t_post que en su c_postID sean mayores a 10 (usa DELETE):", "DELETE FROM t_post WHERE c_postID>10;"), //si
+    new Consulta(3, "Sentencia para contar el número de post que ha hecho un usuario, teniendo en cuenta que la columna de post es c_post, y el nombre de usuario es c_usuario de la tabla t_posts (usa COUNT y GROUP BY):", "SELECT COUNT(c_post), c_usuario FROM t_posts GROUP BY c_usuario;"), // si
+    new Consulta(3, "Mostrar id de Post que sean 11 o 18 de la tabla t_post, donde la columna del id post es c_id_post (usa WHERE):", "SELECT c_id_post FROM t_post WHERE c_id_post=11 or c_id_post=18;"), //si
+    new Consulta(3, "Unir las tablas t_post y t_usuarios por medio de la columna c_usuarioID (usa JOIN):", "SELECT * FROM t_post JOIN t_usuarios ON t_post.c_usuarioID= t_usuarios.c_usuarioID;"), //si
+    new Consulta(3, "Eliminar los usuarios de la tabla t_usuarios cuyo c_usuarioID sea menor a 5 (usa DELETE):", "DELETE FROM t_usuarios WHERE c_usuarioID < 5;"),// si
+    new Consulta(3, "Palabra que se utiliza para ejecutar un procedimiento almacenado:", "EXEC"), //si
+    new Consulta(3, "Selecciona el total de usuarios (Total_usuarios) agrupados por su apellido paterno (c_apaterno) y ordenados de forma descendente de la tabla t_usuarios:", "SELECT c_apaterno, COUNT(*) AS Total_usuarios FROM t_usuarios GROUP BY c_apaterno ORDER BY Total_usuarios DESC;"), //si
+    new Consulta(3, "Actualizar el nombre de usuario (c_nombre) en la tabla t_usuarios a (Juan) donde el ID del usuario (c_usuarioID) es 5:", "UPDATE t_usuarios SET c_nombre = 'Juan' WHERE c_usuarioID = 5;"), //si
+    new Consulta(3, "Ejecución del procedimiento almacenado ActualizarSaldo con CuentaID=5 y NuevoSaldo=300.00:", "EXEC ActualizarSaldo 5, 300.00;"), // si
+    new Consulta(3, "Crear una variable promedio y asignarle el valor 0 (usa SET):", "SET @promedio = 0") //si
+};
 
     void Start()
     {
