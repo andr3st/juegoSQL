@@ -1,13 +1,12 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneChanger : MonoBehaviour
+public class MenuChanger : MonoBehaviour
 {
 
     // Método para cambiar a una escena específica por índice
-    public void ChangeScene(int sceneIndex)
+    public void MenuScene(int sceneIndex)
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(0);
     }
 }
-//

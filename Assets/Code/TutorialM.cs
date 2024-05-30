@@ -6,65 +6,74 @@ using TMPro;
 
 public class Tutorial : MonoBehaviour
 {
-    public GameObject Pantalla;
-    public GameObject Siguiente;
-    public GameObject Anterior;
-    public GameObject Texto;
-    public Sprite[] Imagenes;
-    private int ContadorImagen=0;
+    public GameObject Siguiente; // Botón siguiente
+    public GameObject Anterior; // Botón anterior
+    public GameObject Texto; // GameObject que contiene el texto
+    private int ContadorTexto = 0; // Contador del texto actual
     private string[] Sentencias = new string[]{
-        "Bienvenido a SQL. A continuación te enseñaremos cómo se juega", "Esta es la segunda Imagen",
+        "Bienvenido a SQL. A continuación te enseñaremos cómo se juega",
+        "La barra de estrés aumentará si la respuesta es incorrecta",
+        "La barra de suma aumentará si la respuesta es correcta",
+        "Sigue respondiendo correctamente para ganar chocolates",
+        "¡Buena suerte y diviértete!"
     };
-    public void cambiarImagen(GameObject b){
-        TextMeshProUGUI Info= Texto.GetComponent<TextMeshProUGUI>();
-        Image Imagen=Pantalla.GetComponent<Image>();
-        Button bAnterior= Anterior.GetComponent<Button>();
-        Button bSiguiente= Siguiente.GetComponent<Button>();
-        if(ContadorImagen==0){
-            if(b.tag=="Anterior"){
-                bAnterior.interactable=false;
-            }
-            else{
-                ContadorImagen++;
-            }
+
+    public void CambiarTexto(string direccion)
+    {
+        TextMeshProUGUI Info = Texto.GetComponent<TextMeshProUGUI>();
+        Button bAnterior = Anterior.GetComponent<Button>();
+        Button bSiguiente = Siguiente.GetComponent<Button>();
+
+        if (direccion == "Anterior")
+        {
+            ContadorTexto--;
         }
-        else if(ContadorImagen>0 && ContadorImagen<Sentencias.Length){
-            if(b.tag=="Anterior"){
-                ContadorImagen--;
-                bAnterior.interactable=true;
-            }
-            else{
-                ContadorImagen++;
-                bSiguiente.interactable=true;
-            }
+        else if (direccion == "Siguiente")
+        {
+            ContadorTexto++;
         }
-        else{
-            if(b.tag=="Anterior"){
-                ContadorImagen--;
-            }
-            else{
-                bSiguiente.interactable=false;
-            }
+
+        ContadorTexto = Mathf.Clamp(ContadorTexto, 0, Sentencias.Length - 1);
+
+        if (ContadorTexto == 0)
+        {
+            bAnterior.interactable = false;
         }
-        Imagen.sprite=Imagenes[ContadorImagen];
-        Info.text=Sentencias[ContadorImagen];
+        else
+        {
+            bAnterior.interactable = true;
+        }
+
+        if (ContadorTexto == Sentencias.Length - 1)
+        {
+            bSiguiente.interactable = false;
+        }
+        else
+        {
+            bSiguiente.interactable = true;
+        }
+
+        Info.text = Sentencias[ContadorTexto];
     }
-    //Hacer un arreglo con texto
-    // Start is called before the first frame update
+
     void Start()
     {
-        Button bAnterior= Anterior.GetComponent<Button>();
-        bAnterior.interactable= false;
+        Button bAnterior = Anterior.GetComponent<Button>();
+        bAnterior.interactable = false;
 
-        Image Imagen=Pantalla.GetComponent<Image>();
-        Imagen.sprite=Imagenes[ContadorImagen];
-        
-        TextMeshProUGUI Info= Texto.GetComponent<TextMeshProUGUI>();
-        Info.text=Sentencias[ContadorImagen];
+        TextMeshProUGUI Info = Texto.GetComponent<TextMeshProUGUI>();
+        Info.text = Sentencias[ContadorTexto];
 
+        Button bSiguiente = Siguiente.GetComponent<Button>();
+        if (Sentencias.Length <= 1)
+        {
+            bSiguiente.interactable = false;
+        }
     }
 
-    // Update is called once per frame
+    // Update is called once per frame (si se necesita)
+    void Update()
+    {
+        // Aquí podrías manejar cualquier lógica adicional que necesites para el tutorial
+    }
 }
-
-
