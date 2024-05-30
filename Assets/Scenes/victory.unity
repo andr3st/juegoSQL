@@ -463,9 +463,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SceneChanger, Assembly-CSharp
-        m_MethodName: ChangeScene
+      - m_Target: {fileID: 1591063908}
+        m_TargetAssemblyTypeName: CambioEscena, Assembly-CSharp
+        m_MethodName: CambiarEscena
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -665,13 +665,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1591063908}
-        m_TargetAssemblyTypeName: SceneChanger, Assembly-CSharp
-        m_MethodName: ChangeScene
+        m_TargetAssemblyTypeName: CambioEscena, Assembly-CSharp
+        m_MethodName: CambiarEscena
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -830,7 +830,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1591063906}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6085ec8b3ed805141a1963f8c9439012, type: 3}
+  m_Script: {fileID: 11500000, guid: c852f2ef8817c9c4288f297a137e8c69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1741025563
